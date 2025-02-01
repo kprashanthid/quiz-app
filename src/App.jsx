@@ -15,6 +15,7 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(30);
   const [selectedOptionId, setSelectedOptionId] = useState(null);
 
+  // Load quiz data from API
   useEffect(() => {
     const loadQuizData = async () => {
       try {
@@ -33,6 +34,7 @@ function App() {
     loadQuizData();
   }, []);
 
+  // Timer logic
   useEffect(() => {
     if (quizStarted && !quizCompleted) {
       const timer = setInterval(() => {
@@ -50,10 +52,12 @@ function App() {
     }
   }, [quizStarted, quizCompleted, currentQuestionIndex]);
 
+  // Start quiz
   const handleStartQuiz = () => {
     setQuizStarted(true);
   };
 
+  // Handle answer selection
   const handleAnswer = (isCorrect) => {
     if (isCorrect) {
       setScore(score + 1);
@@ -61,6 +65,7 @@ function App() {
     handleNextQuestion();
   };
 
+  // Handle next question logic
   const handleNextQuestion = () => {
     const nextQuestion = currentQuestionIndex + 1;
     if (nextQuestion < quizData.questions.length) {
@@ -87,7 +92,7 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-r from-purple-500 via-pink-600 to-indigo-600 bg-[length:400%_400%] animate-gradient-animation flex flex-col items-center justify-center text-white">
+      <div className="min-h-screen bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 flex flex-col items-center justify-center text-white font-semibold">
         <p className="text-2xl">Loading quiz data...</p>
       </div>
     );
@@ -95,24 +100,24 @@ function App() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-r from-purple-500 via-blue-600 to-indigo-700 bg-[length:400%_400%] animate-gradient-animation flex flex-col items-center justify-center text-white">
+      <div className="min-h-screen bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 flex flex-col items-center justify-center text-white font-semibold">
         <p className="text-2xl text-red-500">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-r from-purple-500 via-pink-600 to-indigo-600 bg-[length:400%_400%] animate-gradient-animation flex flex-col items-center justify-center text-white">
+    <div className="px-5 w-full min-h-screen bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 flex flex-col items-center justify-center text-white font-semibold">
       {!quizStarted && <QuizStart onStart={handleStartQuiz} />}
       {quizStarted && !quizCompleted && (
         <>
-          <div className="w-full max-w-2xl bg-gray-200 rounded-full h-4 mb-8">
+          <div className="w-full max-w-2xl bg-gray-100 rounded-full h-4 mb-8 shadow-md">
             <div
               className="bg-green-500 h-4 rounded-full"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          <div className="flex justify-between w-full max-w-2xl mb-8 text-lg text-gray-800">
+          <div className="flex justify-between w-full max-w-2xl mb-8 text-lg">
             <p>Time Left: {timeLeft}s</p>
             <p>
               Question {currentQuestionIndex + 1} / {quizData.questions.length}

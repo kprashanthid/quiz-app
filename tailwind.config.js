@@ -14,6 +14,10 @@ export default {
       animation: {
         "gradient-animation": "gradientShift 15s ease infinite",
       },
+      colors: {
+        primary: "#9b4d96",
+        secondary: "#bc6cc6",
+      },
     },
   },
   plugins: [],
